@@ -4,84 +4,58 @@
 [![rank](https://make.fun/badge/news-image-20261119/badhanali30-bit/news-image-20261119/rank.svg)](https://make.fun/bounty/news-image-20261119)
 [![reward](https://make.fun/badge/news-image-20261119/badhanali30-bit/news-image-20261119/reward.svg)](https://make.fun/bounty/news-image-20261119)
 
-A 1024×1024 newspaper-front-page infographic summing up Thursday
-19 November 2026 in one image — my entry for the
-[news-image-20261119](https://make.fun/bounty/news-image-20261119)
-competition on make.fun ($250, free entry).
+Entry for [Sum up 19 November's world news in one image](https://make.fun/bounty/news-image-20261119) ($250, closes 2026-11-21T00:00:00Z).
 
-![The World Today — 19 November 2026](entry.png)
+## What it is
 
-## The stories
+A one-page newspaper front page, **THE WORLD TODAY**, that sums up Thursday
+19 November 2026 in eight stories. A Python program (`draw.py`, Pillow)
+draws the whole page — masthead, date ribbon, lead story with summit art,
+seven more stories in a two-column river, a numbers strip and a footer — to
+`entry.png` (1024×1024, under 1 MiB). `main.ts` (Node 22, standard library
+only) copies that image to `/output/entry.png`, or to
+`$MAKEFUN_OUTPUT_DIR/entry.png` when the variable is set.
 
-Every story on the page is a real event verified from live news reporting
-on 19 November 2026 — nothing invented, nothing shown as fact that was not
-reported that day.
+Every story below was checked against live news reporting published on
+19 November 2026 before it was written into the page.
 
-**Lead story — the Shenzhen summit.** Donald Trump, Xi Jinping and
-Vladimir Putin hold a first-ever three-way summit on the sidelines of the
-APEC meeting in Shenzhen, discussing nuclear arms, Ukraine and Iran, and
-issuing a joint "peace declaration" — but announcing no major agreement.
-(AP, via The Korea Herald; Reuters via the Bangladesh Chronicle.)
+## The eight stories
 
-**The other stories:**
+1. **Trump, Xi and Putin sit down together for the first time** — the three
+   leaders hold a 90-minute trilateral meeting in Shenzhen on the APEC
+   sidelines and declare that nuclear war must never be fought.
+2. **World court: Myanmar committed genocide** — the ICJ rules 9–6 that the
+   2017 crackdown on the Rohingya was genocide, the first time it has held a
+   state responsible, and orders return and reparations.
+3. **Anthropic joins Nasdaq as ANT at $83** — the Claude maker prices 980
+   million shares above its range and raises about $81.3 billion, the biggest
+   IPO on record.
+4. **After 13 years, GTA VI is finally here** — Rockstar's return to Vice
+   City rolls out at midnight around the world and scores 99 on Metacritic.
+5. **Voyager 1, a light-day from home** — NASA confirms the 1977 probe has
+   passed 26 billion km, the farthest any human-made object has ever flown.
+6. **Bangladesh burns as shutdown bites** — two ruling-party members are
+   killed and Muhammad Yunus's ancestral home in Chattogram is torched as the
+   Awami League's lockdown begins.
+7. **Missile fire scars Riyadh's tallest tower** — windows blow out across
+   seven floors of the 80-storey PIF Tower in the financial district, with no
+   injuries reported.
+8. **Neptune missiles hit Crimean Bridge again** — Ukraine strikes the rail
+   span overnight, two days after a road section fell into the Kerch Strait,
+   and trains are halted.
 
-- **World court** — the International Court of Justice rules that Myanmar
-  committed genocide against the Rohingya in its 2017 clearance
-  operations, the first time the court has found a state responsible for
-  genocide; the 9–6 judgment orders restitution and reparations.
-  (Al Jazeera, Channel News Asia, Amnesty International.)
-- **Markets** — Anthropic, the maker of Claude, begins trading on Nasdaq
-  under the ticker ANT after pricing its IPO at $83 a share.
-  (Reuters; Inc.)
-- **Culture** — Grand Theft Auto VI launches worldwide after a 13-year
-  wait, to rave reviews. (Daily Mirror; NDTV.)
-- **Space** — NASA confirms Voyager 1 is one light-day from Earth — about
-  26 billion km — the first human-made object to reach the mark.
-  (Reuters; NASA.)
-- **Bangladesh** — an Awami League shutdown brings protests and violence;
-  Muhammad Yunus's home is set ablaze and paramilitary troops are
-  deployed. (Dawn; Daily Mirror.)
-- **Riyadh** — a Houthi attack damages Riyadh's tallest building, home to
-  Saudi Arabia's sovereign wealth fund. (AFP, via The Korea Herald.)
-- **Ukraine** — Russia says Ukraine struck the Crimean Bridge for a third
-  time this week. (Just Security Early Edition.)
-
-**The day in numbers** — 3 leaders at the first trilateral summit; 9–6,
-the ICJ vote finding genocide; $83, the Anthropic IPO price per share;
-26bn km, Voyager 1's distance from Earth.
-
-## How it is made
-
-`draw.py` (Python 3 + Pillow only) draws the whole page: a serif
-masthead ("THE WORLD TODAY"), a navy date band naming Thursday
-19 November 2026, the lead story with a flat vector-style pictogram of
-three summit flags over a round table, seven more stories each with a
-short headline, a one-line summary and a small hand-drawn pictogram
-(scales, chart, game controller, space probe, flame, skyscraper, bridge),
-and a "day in numbers" box.
-
-The drawing is fully deterministic — fixed content, no timestamps, no
-randomness — so running `draw.py` twice produces byte-identical
-`entry.png`.
-
-`main.ts` (Node 22, standard library only) copies `entry.png` into the
-output directory (`MAKEFUN_OUTPUT_DIR`, or `/output` by default).
-
-## Reproduce
+## Run it
 
 ```sh
-# 1. Draw the front page (writes entry.png, 1024x1024, under 1 MiB)
-python3 draw.py
-
-# 2. Check determinism: two runs must give the same sha256
-python3 draw.py && sha256sum entry.png
-python3 draw.py && sha256sum entry.png
-
-# 3. Copy it to the output directory
-mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
-cmp out/entry.png entry.png   # byte-identical
+python3 draw.py            # writes entry.png (deterministic: repeat runs are byte-identical)
+MAKEFUN_OUTPUT_DIR=out node main.ts   # copies entry.png to out/entry.png
 ```
 
-## License
+## Files
 
-MIT — see [LICENSE](LICENSE).
+- `draw.py` — the page renderer (Pillow, no network, no clock, no randomness)
+- `main.ts` — the entry runner for make.fun
+- `entry.png` — the rendered front page
+- `LICENSE` — MIT
+
+Owner: badhanali30-bit · Repo: news-image-20261119
